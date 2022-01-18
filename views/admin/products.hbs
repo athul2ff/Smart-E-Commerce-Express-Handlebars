@@ -1,0 +1,69 @@
+<!-- Navbar -->
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <div style="float: left;" class="col-md-6">
+                            <h5 class="card-title ">product Details</h5>
+                        </div>
+                        {{!-- <div style="float:left" class="col-md-6">
+                            <a href="/admin/addProduct"><button style="background-color:rgb(12, 7, 41); float: right;" type="button"   class="btn btn-outline-dark ">Add Product</button></a>
+                            
+                        </div> --}}
+
+
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                             <div style="float:left" class="col-md-12">
+                            <a href="/admin/addProduct"><div style="background-color: #0562afb4;margin: 10px; width: 140px; color: #ffff; padding: 9px; text-align: center;width: 160px; float: right;">ADD PRODUCT</div></a>
+                            
+                        </div>
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>No</th>
+                                    <th>Title</th>
+                                    <th>Brand</th>
+                                    <th>Category</th>
+                                    {{!-- <th>Size</th>
+                                    <th>Details</th> --}}
+                                    <th>Price</th>
+                                    <th>Offer</th>
+                                    <th>Qty</th>
+                                    <th>Image</th>
+                                    
+
+                                </thead>
+                                <tbody id="">
+                                    {{#each product}}   
+
+                                    <tr>
+                                        <td>{{@index}}</td>
+                                        <td>{{this.title}}</td>
+                                        <td>{{this.brand}}</td>
+                                        <td>{{this.category}}</td>
+                                        {{!-- <td>{{this.size}}</td>
+                                        <td>{{this.details}}</td> --}}
+                                        <td>{{this.price}}</td>
+                                        <td>{{this.offer}}</td>
+                                        <td>{{this.quantity}}</td>
+                                        <td><img style="height: 60px; width:60px;" src="/images/admin/img/product-images/{{this._id}}_1.jpg" alt="sdfsd"></td>
+                                           <td><a href="/admin/editproduct/{{this._id}}"><img style="height: 40px;"  src="https://img.icons8.com/external-kiranshastry-lineal-kiranshastry/64/000000/external-edit-delivery-kiranshastry-lineal-kiranshastry.png"/></a></td>
+                                          <td><a href="/admin/deleteproducts/{{this._id}}" onclick="return confirm('Are you sure Want to Delete {{this.title}}?')"><img style="height: 40px;" src="https://img.icons8.com/external-kiranshastry-solid-kiranshastry/64/000000/external-delete-miscellaneous-kiranshastry-solid-kiranshastry.png"/></a></td>
+
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

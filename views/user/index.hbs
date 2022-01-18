@@ -1,0 +1,130 @@
+<!-- product-nav -->
+<div>
+<div class="product-easy">
+	<div class="container">
+		
+		
+		<div class="sap_tabs">
+			<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
+				<ul class="resp-tabs-list">
+					<li class="resp-tab-item" aria-controls="tab_item-0" role="tab"><span>Latest Designs</span></li> 
+					<li class="resp-tab-item" aria-controls="tab_item-1" role="tab"><span>Men's Wear</span></li> 
+					<li class="resp-tab-item" aria-controls="tab_item-2" role="tab"><span>Women's Wear</span></li> 
+				</ul>				  	 
+
+				<div class="resp-tabs-container">
+					<div class="tab-1 resp-tab-content" aria-labelledby="tab_item-0">
+                        {{#each products.products}}
+						<div class="col-md-3 product-men" style="margin-bottom: 30px;">
+                          
+							<div class="men-pro-item simpleCart_shelfItem">
+								<div class="men-thumb-item">
+									<img src="/images/admin/img/product-images/{{this._id}}_1.jpg" alt="" class="pro-image-front">
+									<img src="/images/admin/img/product-images/{{this._id}}_1.jpg" alt="" class="pro-image-back">
+										<div class="men-cart-pro">
+											<div class="inner-men-cart-pro">
+												<a href="/singelview/{{this._id}}" class="link-product-add-cart">Quick View</a>
+											</div>
+										</div>
+										<span class="product-new-top">New</span>
+										
+								</div>
+								<div class="item-info-product ">
+									<h4><a href="single.html">{{this.title}}</a></h4>
+									<div class="info-product-price">
+										<span class="item_price">₹{{this.offer}}</span>
+										<del>₹{{this.price}}</del>
+									</div>
+									{{!-- <a href="/addtocart/{{this._id}}" class="item_add single-item hvr-outline-out button2">Add to cart</a>		 --}}
+						    	<a  class="item_add single-item hvr-outline-out button2 " onclick="addToCart('{{this._id}}')" >Add to cart</a>
+								</div>
+							</div>
+                         
+						</div>
+                        {{/each}}
+						<div class="clearfix"></div>		
+					</div>
+
+
+
+
+						 <div class="tab-1 resp-tab-content" aria-labelledby="tab_item-1">
+						             {{#each products.menproducts}}
+						<div class="col-md-3 product-men">
+                          
+							<div class="men-pro-item simpleCart_shelfItem">
+								<div class="men-thumb-item">
+									<img src="/images/admin/img/product-images/{{this._id}}_1.jpg" alt="" class="pro-image-front">
+									<img src="/images/admin/img/product-images/{{this._id}}_1.jpg" alt="" class="pro-image-back">
+										<div class="men-cart-pro">
+											<div class="inner-men-cart-pro">
+												<a href="/singelview/{{this._id}}" class="link-product-add-cart">Quick View</a>
+											</div>
+										</div>
+										<span class="product-new-top">New</span>
+										
+								</div>
+								<div class="item-info-product ">
+									<h4><a href="single.html">{{this.title}}</a></h4>
+									<div class="info-product-price">
+										<span class="item_price">₹{{this.offer}}</span>
+										<del>₹{{this.price}}</del>
+									</div>
+									<a href="#" onclick="addToCart('{{this._id}}')"class="item_add single-item hvr-outline-out button2">Add to cart</a>									
+								</div>
+							</div>
+                         
+						</div>
+                        {{/each}}
+						<div class="clearfix"></div>	
+
+					</div>	
+					
+
+                   
+						 <div class="tab-2 resp-tab-content" aria-labelledby="tab_item-2">
+						             {{#each products.womenproducts}}
+						<div class="col-md-3 product-men">
+                          
+							<div class="men-pro-item simpleCart_shelfItem">
+								<div class="men-thumb-item">
+									<img src="/images/admin/img/product-images/{{this._id}}_1.jpg" alt="" class="pro-image-front">
+									<img src="/images/admin/img/product-images/{{this._id}}_1.jpg" alt="" class="pro-image-back">
+										<div class="men-cart-pro">
+											<div class="inner-men-cart-pro">
+												<a href="/singelview/{{this._id}}" class="link-product-add-cart">Quick View</a>
+											</div>
+										</div>
+										<span class="product-new-top">New</span>
+										
+								</div>
+								<div class="item-info-product ">
+									<h4><a href="single.html">{{this.title}}</a></h4>
+									<div class="info-product-price">
+										<span class="item_price">₹{{this.offer}}</span>
+										<del>₹{{this.price}}</del>
+									</div>
+									<a href="/singelview/"onclick="addToCart('{{this._id}}')" class="item_add single-item hvr-outline-out button2">Add to cart</a>									
+								</div>
+							</div>
+                         
+						</div>
+                        {{/each}}
+						<div class="clearfix"></div>	
+
+					</div>	
+
+                 
+
+
+				</div>	
+                
+			</div>
+		</div>
+        
+	</div>
+</div>
+<!-- //product-nav -->
+</div>
+
+

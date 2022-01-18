@@ -1,0 +1,231 @@
+<section id="cart_items">
+	<div class="container">
+
+		<hr>
+
+		<div class="shopper-informations">
+			<div class="row">
+				{{#each address}}
+				
+				<h1>{{this.delivaryDetails.email}}</h1>
+				{{/each}}
+				<form id="checkout-form" action="">
+					<div class="col-12 col-md-8">
+						
+						<div class="form-group">
+							<input type="text" name="userId" value="{{userId}}" hidden>
+							<label>Name</label>
+							<input type="text" class="form-control" name="name" placeholder=" Enter your Name">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>Mobile Number</label>
+							<input type="number" class="form-control" name="mobile" placeholder="Phone Number">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>Email</label>
+							<input type="email" class="form-control" name="email" placeholder=" Email Address">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>Alternative Mobile Number</label>
+							<input type="text" class="form-control" name="mobile2" placeholder=" Email Address">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>Pincode</label>
+							<input type="text" class="form-control" name="pincode" placeholder=" Email Address">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>Landmark</label>
+							<input type="text" class="form-control" name="country" placeholder=" Landmark">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>State</label>
+							<input type="text" class="form-control" name="state" placeholder=" State">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>City</label>
+							<input type="text" class="form-control" name="city" placeholder=" City">
+						</div>
+						<div class="form-group col-sm-6">
+							<label>Street Address</label>
+							<textarea class="form-control" name="" id="" cols="30" rows="2" placeholder="Street Address"></textarea>
+							{{!-- <input type="text" class="form-control" name="landmark" placeholder="Street Address"> --}}
+						</div>
+						<br>
+
+					</div>
+
+					<div class="col-md-4 order-md-2 mb-4" style="margin-top: 4em;">
+						<ul class="list-group mb-3">
+							<li class="list-group-item d-flex justify-content-between lh-condensed">
+								<div>
+									<h5 class="my-0">shopping list</h5>
+									{{#each products}}
+									<small class="text-muted">{{this.products.title}}</small><br>
+									{{/each}}
+								</div>
+
+								{{!-- {{#if credits}} <span class="text-muted">₹{{credits}}</span>{{else}}<span
+									class="text-muted">₹0</span>{{/if}} --}}
+							</li> 
+						
+							
+							<li class="list-group-item d-flex justify-content-between bg-light" id="couponEr">
+								<div><h5 style="display: none; color: red;" id="couponErr">Coupon not valid</h5></div>
+								<div class="row" >
+									 
+									<div class="col-6" style="margin-left: 1em;">
+                                     <input type="text"  name="" id="coupon" placeholder="Enter CouponCode">
+									</div>
+									<div class="col-6" style="margin-left: 1em;"  >
+										
+                                      <a  onclick="checkCoupon('{{this}}')" style="float: right;"> <h4 class="my-0">Apply Coupon </h4></a>
+									</div> 
+									
+									
+								</div>
+								
+								<span class="text-success" id="voucher-discount"> </span>
+							</li> 
+							<li class="list-group-item d-flex justify-content-between">
+								<span>Total (Rupees)</span>
+								<strong style="float: right;" id="totalAmount">{{totalamount.total}}</strong>
+							</li>
+							<li class="list-group-item d-flex justify-content-between">
+								<span> Coupon Discount</span>
+								<strong style="float: right;" id="couponDiscount"></strong>
+							</li>
+							<li class="list-group-item d-flex justify-content-between">
+								<span>Grand Total (Rupees)</span>
+								<strong style="float: right;" id="grandTotal">{{totalamount.total}}</strong>
+							</li>
+
+							
+						</ul>
+
+						<div class="input-group">
+							<div class="form-group">
+								<h4><b>Payment Method</b></h4>
+
+								<div style="margin-left: 10%;">
+									<label class="radio-inline">
+										<label class="radio-inline">
+											<input style="margin-left: -60%; margin-top:5px ;" type="radio" value="cod"
+												name="paymentMethod">Cash on delivary
+										</label><br>
+										<label class="radio-inline">
+											<input style="margin-left: -60%; margin-top: 5px;" type="radio"
+												value="online" name="paymentMethod">Online Payment
+										</label>
+
+								</div>
+								<div style="margin-top: 7%;">
+									<input type="number" id="grndtotal" name="grandTotal" placeholder=" Email Address" value="{{totalamount.total}}" hidden>
+
+									<button type="submit" class="btn btn-success text-dark">Continue to Payment</button>
+								</div><br>
+
+							</div>
+						</div>
+				</form>
+			</div>
+		</div>
+	</div><br><br>
+</section>
+<!--/#cart_items-->
+
+<script>
+	$('#checkout-form').submit((e) => {
+		e.preventDefault()
+		$.ajax({
+			url: '/placeorder',
+			method: 'post',
+			data: $('#checkout-form').serialize(),
+			success: (response) => {
+				if (response.stat) {
+					location.href = '/just'
+				} else {
+
+					razorpayPayment(response)
+
+				}
+
+			}
+		})
+	})
+
+	function razorpayPayment(order) {
+		var options = {
+			"key": "rzp_test_79XxtKjzAHhMKG", // Enter the Key ID generated from the Dashboard
+			"amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+			"currency": "INR",
+			"name": "Smart shop",
+			"description": "Test Transaction",
+			"image": "https://example.com/your_logo",
+			"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+			"handler": function (response) {
+				alert(response.razorpay_payment_id);
+				alert(response.razorpay_order_id);
+				alert(response.razorpay_signature)
+
+				verifyPayment(response, order)
+			},
+			"prefill": {
+				"name": "Gaurav Kumar",
+				"email": "gaurav.kumar@example.com",
+				"contact": "9999999999"
+			},
+			"notes": {
+				"address": "Razorpay Corporate Office"
+			},
+			"theme": {
+				"color": "#3399cc"
+			}
+		};
+		var rzp1 = new Razorpay(options);
+		rzp1.open();
+	}
+	function verifyPayment(payment, order) {
+		$.ajax({
+			url: '/verify-payment',
+			data: {
+				payment,
+				order
+			},
+			method: 'post',
+			success: (response) => {
+				if (response.status == true) {
+					location.href = '/just'
+				} else {
+					alert('Payment Failed')
+				}
+			} 
+
+		})
+	}
+
+
+	//check coupon
+	 function checkCoupon(total){
+		 let couponCode=document.getElementById('coupon').value;
+    $.ajax({
+		url:'/coupon',
+		data:{
+			couponCode
+		},
+		method:'post',
+		success:(response)=>{
+			console.log(response.grandTotal)
+			if(response.couponStatus == false){
+				document.getElementById('couponErr').style.display='block'
+			}else{
+				document.getElementById('couponEr').style.display='none'
+				document.getElementById('couponDiscount').innerHTML="-"+response.couponAmount;
+				document.getElementById('grandTotal').innerHTML=response.grandTotal;
+				document.getElementById('grndtotal').value=response.grandTotal;
+               
+			}
+		}
+	})
+  }
+
+</script>

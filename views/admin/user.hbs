@@ -1,0 +1,49 @@
+
+<!-- Navbar -->
+
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-primary">
+           <h5>Users Details</h5>
+          </div>
+          
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">  
+                  <th>No</th>
+                  <th>Id</th>
+                  <th>Name</th>
+                  <th>Gender</th>
+                  <th>Email</th>
+                  <th> <h1 class="card-title " style="width: 200px; "><input id="myInput" type="text" value="" class="form-control"   placeholder= " SEARCH USER ..">
+             </h1></th>
+                 
+                </thead>
+                <tbody id="myTable">
+                  {{#each user}}
+
+                  <tr>
+                    <td>{{@index}}</td>
+                    <td>{{this._id}}</td>
+                    <td>{{this.name}}</td>
+                    <td>{{this.gender}}</td>
+                    <td>{{this.email}}</td>
+                    
+                    {{block this.status this._id}}
+                  </tr>
+                  {{/each}}
+     
+              
+               </tbody>
+              </table> 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  

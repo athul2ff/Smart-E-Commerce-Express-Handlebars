@@ -1,0 +1,54 @@
+<div class="container">
+<div class="row" style="padding-top: 22px;">
+ <a href="/view-orders"> <div style="padding:4px;color: blanchedalmond; text-align: center;  background-color: rgba(0, 0, 0, 0.822);; margin-right: 5px; border-radius: 3%;"><h4> Current Orders</h4></div> </a>
+ <div style="padding: 4px; color: blanchedalmond;text-align: center; background-color: rgba(0, 0, 0, 0.452);; margin-right: 5px;  border-radius: 3%;"><h4>Deliverd Orders</h4></div> 
+</div></div>
+          <div class="container"  style="overflow-x:auto; margin-top: 20px;">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">  
+                  <th>No</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Address</th>
+                  <th>Amount</th>
+                   <th>Payment</th>
+                  <th>Order Status</th>
+                 
+                  <th></th>
+                  <th></th>
+                 
+                </thead>
+                <tbody >
+                  {{#each order}}
+                  <tr>
+                   
+                    <td>{{add @index}}</td>
+                   
+                    <td>{{date this.delivaryDetails.date}}</td>
+                    <td>{{time this.delivaryDetails.date}}</td> 
+                    <td>{{this.delivaryDetails.name}} <br>
+                        {{this.delivaryDetails.email}} <br>
+                        {{this.delivaryDetails.mobile}},{{this.delivaryDetails.mobile2}} <br>
+                        {{this.delivaryDetails.state}},{{this.delivaryDetails.country}} <br>
+                        {{this.delivaryDetails.city}},{{this.delivaryDetails.pincode}} <br>
+                        {{this.delivaryDetails.landmark}}  <br>
+                        {{this.delivaryDetails.address}}
+                        
+                    </td>
+                    <td style="color: rgb(0, 128, 122); font-size: large;"> ₹{{this.grandTotal}}</td>
+                    <td style="color: rgb(0, 128, 122); font-size: large;">{{this.paymentMethod}}</td>
+                    <td style="color: green; font-size: large;" >{{this.statusupdate}}</td>
+                    <td><a href="/view-order-details/{{this._id}}" class="btn btn-warning" >View Products</a></td>
+                    <td><a href="/invoice/{{this._id}}" ><h5 style="margin-top: 43px;"><b>View invoice</b></h5></a></td>
+                  </tr>
+                  {{/each}}
+     
+              
+               </tbody>
+              </table> 
+            </div>
+          </div>
+          </div>
+      

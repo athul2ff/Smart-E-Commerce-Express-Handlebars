@@ -1,0 +1,48 @@
+ <div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w780">
+            <div class="card card-3">
+                <div class="card-heading"></div>
+                <div class="card-body">
+                    <h2 class="title">Create new Account</h2>
+                     {{#if signupErr}}
+                    <h5 style="color: red;">Email ID Allredy Taken Try Again...</h5><br>
+                    {{/if}}
+                    <form action="/submitSignupForm" method="POST" id="myform">
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="Name" name="name">
+                        </div>
+                        <div class="input-group">
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="gender">
+                                    <option disabled="disabled" selected="selected">Gender</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="email" placeholder="Email" name="email">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="Phone" name="mobile">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="password" placeholder="Password" name="password" id="password">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="password" placeholder="Conform Password" name="Password2">
+                        </div>              
+                        <div class="p-t-10">
+                            <button class="btn btn--pill btn--green" type="submit">Signup</button>
+                        </div>
+                    </form>
+                     <br><br>
+                         <h5 style="float: right;"><a href="/goHome">Continue With gust Account</a></h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+

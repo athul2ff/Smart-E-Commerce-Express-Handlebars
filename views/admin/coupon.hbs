@@ -1,0 +1,97 @@
+<div class="row" style="text-align: center; align-items: center; float: right; margin-right: 5%;">
+    <a  data-toggle="modal" data-target="#basicExampleModal">
+        <div style="background-color: #0562afb4;margin: 10px; width: 140px; color: #ffff; padding: 4px;">Add new coupon 
+        </div>
+    </a>
+   
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <div style="float: left;" class="col-md-6">
+                            <h5 class="card-title">Available Coupons</h5>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>No</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Coupon Code</th>
+                                    <th>Amount</th>
+                                    <th>Available Quantity</th>
+                                </thead>
+                                <tbody id="">
+                                    {{#each coupon}}
+                                    <tr>
+                                        <td>{{add @index}}</td>
+                                        <td>{{date this.date}}</td>
+                                        <td>{{time this.date}}</td>
+                                        <td>{{this.code}}</td>
+                                        <td>₹ {{this.amount}}</td>
+                                        <td>{{this.quantity}}</td>
+                                    </tr>
+                                    {{/each}}
+                                </tbody>
+                            </table>
+                            
+<!-- Modal -->
+<div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Generate Coupon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <form action="/admin/add-coupon" method="post">
+                    <label for="" style="color: #0562afb4;">
+                        <h5> Enter coupon code</h5>
+                    </label><br>
+                    <input type="text" name="couponCode" id=""><br><br>
+                    <label for="" style="color: #0562afb4;">
+                        <h5> coupon Amount</h5>
+                    </label><br>
+                    <input type="number" name="amount" id=""><br><br>
+                    <label for="" style="color: #0562afb4;">
+                        <h5> Enter quantity</h5>
+                    </label><br>
+                    <input type="number" name="quantity" id=""><br><br>
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" onclick="a()" class="btn btn-success">Save changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script>
+    function a(){
+        console.log("hellow orld")
+    }
+</script>

@@ -1,0 +1,564 @@
+<div id="boc">
+  <br>
+  <h1 id="title" style="color: aliceblue;" hidden>Product Sample Request Form</h1>
+  <div id="form-outer">
+    <p id="description">
+      Get a chance to win a free sample of our product. Fill the details now.
+    </p>
+    <form action="/admin/postProducts" method="POST" enctype="multipart/form-data">
+      <div class="modal fade " id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " role="document">
+          <div class="modal-content ">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class=" modal-title" id="exampleModalLongTitle">Crop Image</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body ">
+              <div class="result"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" id="load" class="btn btn-primary save">Save
+                changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <div class="rowTab">
+        <div class="labeled">
+          <label id="name-label" for="title" >Title </label>
+        </div>
+        <div class="rightelement">
+          <input autofocus type="text" name="title" class="inputs" placeholder="Enter your name">
+        </div>
+
+      </div>
+      <div class="rowTab">
+        <div class="labeled">
+          <label id="name-label" for="brand">Brand</label><br><br>
+        </div>
+        <div class="rightelement">
+          <input autofocus type="text" name="brand" class="inputs" placeholder="Enter your name">
+        </div>
+
+      </div>
+      <div class="rowTab">
+        <div class="labeled">
+          <label for="category">Select Category</label>
+        </div>
+        <div class="rightelement">
+          <ul style="list-style: none;">
+            <li class="radio"><label>Men<input name="category" value="MEN" type="radio" class="rating"></label></li>
+            <li class="radio"><label>Women<input name="category" value="WOMEN" type="radio" class="rating"></label></li>
+            <li class="radio"><label>Kids<input name="category" value="KIDS" type="radio" class="rating"></label></li>
+          </ul>
+        </div>
+      </div>
+      <div class="rowTab">
+        <div class="labeled">
+          <label for="size">Available Size</label>
+        </div>
+        <div class="rightelement">
+          <ul style="list-style: none;">
+            <li><label>Small<input name="size" value="Small" type="checkbox" onclick="a(event)" class="rating "></label>
+            </li>
+            <li><label>Medium<input name="size" value="Medium" type="checkbox" class="rating"></label></li>
+            <li><label>Large<input name="size" value="Large" type="checkbox" class="rating"></label></li>
+            <li><label>XL<input name="size" value="XL" type="checkbox" class="rating"></label></li>
+            <li><label>XXL<input name="size" value="XXL" type="checkbox" class="rating"></label></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="rowTab">
+        <div class="labeled">
+          <label for="Details">Details</label>
+        </div>
+        <div class="rightelement">
+          <textarea id="comments" class="inputs" style="height:50px;resize:vertical;" name="details"
+            placeholder="enter details of products.."></textarea>
+        </div>
+      </div>
+      <div class="rowTab">
+        <div class="labeled">
+          <label id="name-label" for="price">Old Price</label>
+        </div>
+        <div class="rightelement">
+          <input autofocus type="text" name="price" class="inputs" placeholder="Enter price before offer">
+        </div>
+
+      </div>
+      <div class="rowTab">
+        <div class="labeled">
+          <label id="name-label" for="offer">Offred Price</label>
+        </div>
+        <div class="rightelement">
+          <input autofocus type="text" name="offer" class="inputs" placeholder="Enter new price">
+        </div>
+
+      </div>
+      <div class="rowTab">
+        <div class="labeled">
+          <label id="number-label" for="quantity">quantity</label>
+        </div>
+        <div class="rightelement">
+          <input type="number" name="quantity" class="inputs" placeholder="enter quantity">
+        </div>
+      </div>
+
+      <div class="rowTab">
+        <div class="labeled">
+          <label id="name-label" for="image1">Image1(main)</label>
+        </div>
+        <div class="rightelement">
+           <img src="" style="width: 60px;display:none" alt="product image" id="img1Disp" class="img1Disp" />
+           <input class="inputs" type="file" accept="image/*" name="image1" id="fileupload1"  class="js-photo-upload" onchange="viewImage1(event)" onclick="firstImage()">
+            <textarea name="imageBase64Data1" id="imageBase64Data1" cols="30" rows="10" hidden></textarea>
+        </div>
+
+      </div>
+      <div class="rowTab">
+        <div class="labeled">
+          <label id="name-label" for="image2">Image2</label>
+        </div>
+        <div class="rightelement">
+           <img src="" style="width: 60px"   id="img2Disp"  class="img2Disp" />
+           <input class="inputs" type="file" onchange="viewImage2(event)" accept="image/*" name="image2" id="fileupload2" onclick="secondImage()"  class="js-photo-upload" />
+            <textarea name="imageBase64Data2" id="imageBase64Data2" cols="30" rows="10" hidden></textarea>
+        </div>
+
+      </div>
+      <div class="rowTab">
+        <div class="labeled">
+          <label id="name-label" for="image3">Image3</label>
+        </div>
+        <div class="rightelement">
+          <img src="" style="width: 60px"   id="img3Disp"  class="img3Disp" />
+           <input class="inputs" type="file" onchange="viewImage3(event)" class="inputs" accept="image/*" name="image3" id="fileupload3" onclick="thirdImage()"  class="js-photo-upload" />
+           <textarea name="imageBase64Data3" id="imageBase64Data3" cols="30" rows="10" hidden></textarea>
+        </div>
+
+      </div>
+      <div class="rowTab">
+        <div class="labeled">
+          <label id="name-label" for="image4">Image4</label>
+        </div>
+        <div class="rightelement">
+          <img src="" style="width: 60px"   id="img4Disp"  class="img4Disp" />
+           <input class="inputs" type="file" onchange="viewImage4(event)" class="inputs" accept="image/*" name="image4" id="fileupload4" onclick="fourthImage()"  class="js-photo-upload" />
+            <textarea name="imageBase64Data4" id="imageBase64Data4" cols="30" rows="10" hidden></textarea>
+        </div>
+
+      </div>
+
+      <button id="submit" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Raleway:400,500);
+
+
+  headers {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 20px;
+  }
+
+  #form-outer {
+    background-color: rgba(218, 61, 61, 0.87);
+    margin: 0 auto;
+    border-radius: 4px;
+    width: 75%;
+    max-width: 900px;
+    padding: 10px;
+    padding-top: 20px;
+  }
+
+  #boc {
+    text-align: center;
+    font-family: 'Raleway', Helvetica, sans-serif;
+    min-width: 320px;
+  }
+
+  .labeled {
+    display: inline-block;
+    text-align: right;
+    width: 40%;
+    padding: 5px;
+    vertical-align: top;
+    margin-top: 10px;
+  }
+
+  .rightelement {
+    display: inline-block;
+    text-align: left;
+    width: 48%;
+    vertical-align: middle;
+  }
+
+  .inputs {
+    height: 30px;
+    width: 280px;
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+  }
+
+  #userAge {
+    width: 40px;
+  }
+
+  .rating,
+  input[type="checkbox"] {
+    float: left;
+    margin-right: 5px;
+  }
+
+  #submit {
+    background-color: #59ace0;
+    border-radius: 4px;
+    color: white;
+    font-size: 1em;
+    height: 40px;
+    width: 96px;
+    margin: 10px;
+    border: 0px solid;
+  }
+
+  .dropdown {
+    height: 35px;
+    width: 140px;
+    padding: 5px;
+    margin: 10px;
+    margin-top: 15px;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+  }
+
+  .radio,
+  .checkbox {
+    position: relative;
+    left: -43px;
+    margin-left: 10px;
+    display: block;
+    padding-bottom: 10px;
+  }
+
+  @media screen and (max-width: 833px) {
+    .inputs {
+      width: 80%;
+    }
+
+    select {
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width: 520px) {
+    .labeled {
+      width: 100%;
+      text-align: left;
+    }
+
+    .rightelement {
+      width: 80%;
+      float: left;
+    }
+
+    .inputs {
+      width: 100%;
+    }
+
+    select {
+      width: 100%;
+    }
+  }
+</style>
+
+
+
+
+
+<script>
+    function firstImage() {
+        let result = document.querySelector('.result'),
+            save = document.querySelector('.save'),
+            cropped = document.querySelector('.img1Disp'),
+            upload = document.querySelector('#fileupload1'),
+            cropper = '';
+        upload.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                // start file reader
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (e.target.result) {
+                        // create new image
+                        $("#exampleModalCenter").modal("show");
+                        let img = document.createElement('img');
+                        img.id = 'image';
+                        img.src = e.target.result
+                        // clean result before
+                        result.innerHTML = '';
+                        // append new image
+                        result.appendChild(img);
+                        // init cropper
+                        cropper = new Cropper(img, {
+                            viewMode: 2,
+                            aspectRatio: 5 / 6,
+                            autoCropArea: 1,
+                            cropBoxResizable: false,
+                           
+                        });
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        save.addEventListener('click', (e) => {
+            e.preventDefault();
+            // get result to data uri
+            let imgSrc = cropper.getCroppedCanvas({
+                width: 300 // img disp value
+            }).toDataURL();
+            $("#exampleModalCenter").modal("hide");
+            cropped.src = imgSrc;
+            $("#imageBase64Data1").val(imgSrc);
+            var base = document.getElementById('imageBase64Data1').value
+        });
+    }
+</script>
+
+<script>
+    function secondImage() {
+        let result = document.querySelector('.result'),
+            save = document.querySelector('.save'),
+            cropped = document.querySelector('.img2Disp'),
+            upload = document.querySelector('#fileupload2'),
+            cropper = '';
+        upload.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                // start file reader
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (e.target.result) {
+                        // create new image
+                        $("#exampleModalCenter").modal("show");
+                        let img = document.createElement('img');
+                        img.id = 'image';
+                        img.src = e.target.result
+                        // clean result before
+                        result.innerHTML = '';
+                        // append new image
+                        result.appendChild(img);
+                        // init cropper
+                        cropper = new Cropper(img, {
+                            viewMode: 2,
+                            aspectRatio:5 / 6,
+                            autoCropArea: 1,
+                            cropBoxResizable: false,
+                            crop: function (e) {
+                                console.log(e.detail.x);
+                                console.log(e.detail.y);
+                            }
+                        });
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        save.addEventListener('click', (e) => {
+            e.preventDefault();
+            // get result to data uri
+            let imgSrc = cropper.getCroppedCanvas({
+                width: 300 // img disp value
+            }).toDataURL();
+            $("#exampleModalCenter").modal("hide");
+            cropped.src = imgSrc;
+            $("#imageBase64Data2").val(imgSrc);
+            var base = document.getElementById('imageBase64Data2').value
+        });
+    }
+</script>
+
+<script>
+    function thirdImage() {
+        let result = document.querySelector('.result'),
+            save = document.querySelector('.save'),
+            cropped = document.querySelector('.img3Disp'),
+            upload = document.querySelector('#fileupload3'),
+            cropper = '';
+        upload.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                // start file reader
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (e.target.result) {
+                        // create new image
+                        $("#exampleModalCenter").modal("show");
+                        let img = document.createElement('img');
+                        img.id = 'image';
+                        img.src = e.target.result
+                        // clean result before
+                        result.innerHTML = '';
+                        // append new image
+                        result.appendChild(img);
+                        // init cropper
+                        cropper = new Cropper(img, {
+                            viewMode: 2,
+                            aspectRatio: 5 / 6,
+                            autoCropArea: 1,
+                            cropBoxResizable: false,
+                            crop: function (e) {
+                                console.log(e.detail.x);
+                                console.log(e.detail.y);
+                            }
+
+                        });
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        save.addEventListener('click', (e) => {
+            e.preventDefault();
+            // get result to data uri
+            let imgSrc = cropper.getCroppedCanvas({
+                width: 300 // img disp value
+            }).toDataURL();
+            $("#exampleModalCenter").modal("hide");
+            cropped.src = imgSrc;
+            $("#imageBase64Data3").val(imgSrc);
+            var base = document.getElementById('imageBase64Data3').value
+        });
+    }
+</script>
+<script>
+    function fourthImage() {
+        let result = document.querySelector('.result'),
+            save = document.querySelector('.save'),
+            cropped = document.querySelector('.img4Disp'),
+            upload = document.querySelector('#fileupload4'),
+            cropper = '';
+        upload.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                // start file reader
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    if (e.target.result) {
+                        // create new image
+                        $("#exampleModalCenter").modal("show");
+                        let img = document.createElement('img');
+                        img.id = 'image';
+                        img.src = e.target.result
+                        // clean result before
+                        result.innerHTML = '';
+                        // append new image
+                        result.appendChild(img);
+                        // init cropper
+                        cropper = new Cropper(img, {
+                            viewMode: 2,
+                            aspectRatio: 5 / 6,
+                            autoCropArea: 1,
+                            cropBoxResizable: false,
+                            crop: function (e) {
+                                console.log(e.detail.x);
+                                console.log(e.detail.y);
+                            }
+
+                        });
+                    }
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        save.addEventListener('click', (e) => {
+            e.preventDefault();
+            // get result to data uri
+            let imgSrc = cropper.getCroppedCanvas({
+                width: 300 // img disp value
+            }).toDataURL();
+            $("#exampleModalCenter").modal("hide");
+            cropped.src = imgSrc;
+            $("#imageBase64Data4").val(imgSrc);
+            var base = document.getElementById('imageBase64Data4').value
+        });
+    }
+</script>
+
+
+
+<script>
+    function viewImage1(event) {
+        document.getElementById('img1Disp').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let filename = file.split('.').pop()
+        if (filename == 'jpeg' || filename == 'png' || filename == 'jpg') {
+            $('#add-product-button').show()
+            $('#not-img1-error').hide()
+            $('#img1Disp').show()
+        } else {
+            $('#not-img1-error').show()
+            $('#add-product-button').hide()
+            $('#img1Disp').hide()
+        }
+    }
+</script>
+
+<script>
+    function viewImage2(event) {
+        document.getElementById('img2Disp').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let filename = file.split('.').pop()
+        if (filename == 'jpeg' || filename == 'png' || filename == 'jpg') {
+            $('#add-product-button').show()
+            $('#not-img2-error').hide()
+            $('#img2Disp').show()
+        } else {
+            $('#not-img2-error').show()
+            $('#add-product-button').hide()
+            $('#img2Disp').hide()
+        }
+    }
+</script>
+
+<script>
+    function viewImage3(event) {
+        document.getElementById('img3Disp').src = URL.createObjectURL(event.target.files[0])
+        let file = event.target.files[0].name
+        let filename = file.split('.').pop()
+        if (filename == 'jpeg' || filename == 'png' || filename == 'jpg') {
+            $('#add-product-button').show()
+            $('#not-img3-error').hide()
+            $('#img3Disp').show()
+        } else {
+            $('#not-img3-error').show()
+            $('#add-product-button').hide()
+            $('#img3Disp').hide()
+        }
+    }
+</script>
+
+<script>
+  function viewImage4(event){
+    document.getElementById('img4Disp').src = URL.createObjectURL(event.target.files[0])
+    let file =event.target.files[0].name
+    let filename = file.split('.').pop()
+    if(filename == 'jpeg' || filename =='png' || filename =='jpg'){
+      $('#add-product-button').show()
+      $('#not-img4-error').hide()
+      $('#img4Disp').show()
+    }else{
+      $('#not-img4-error').show()
+      $('#add-product-button').hide()
+      $('#img4Disp').hide()
+    }
+  }
+</script>

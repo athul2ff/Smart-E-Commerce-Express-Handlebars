@@ -1,0 +1,82 @@
+<div class="row" style="text-align: center; align-items: center; float: right; margin-right: 5%;">
+    <a href="/admin/pending-orders">
+        <div style="background-color: #05123898;margin: 10px; width: 140px; color: #ffff; padding: 4px;">pending Orders
+        </div>
+    </a>
+    <a href="/admin/deliverd-orders">
+        <div style="background-color: #0562afb4;margin: 10px; width: 140px; color: #ffff; padding: 4px;">Deliverd Orders
+        </div>
+    </a>
+    <a href="/admin/failed-orders">
+        <div style="background-color: #05123898;margin: 10px; width: 140px; color: #ffff; padding: 4px;">Failed Orders
+        </div>
+    </a>
+</div>
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-primary">
+                        <div style="float: left;" class="col-md-6">
+                            <h5 class="card-title ">Sucsessfull Orders</h5>
+                        </div>
+                        {{!-- <div style="float:left" class="col-md-6">
+                            <a href="/admin/addProduct"><button style="background-color:rgb(12, 7, 41); float: right;"
+                                    type="button" class="btn btn-outline-dark ">Add Product</button></a>
+
+                        </div> --}}
+
+
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>No</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>payment Method</th>
+                                    <th>Amount</th>
+                                    <th>Coustemer</th>
+
+
+
+                                </thead>
+                                <tbody id="">
+                                    {{#each orders}}
+
+                                    <tr>
+                                        <td>{{add @index}}</td>
+                                        <td>{{date this.delivaryDetails.date}}</td>
+                                        <td>{{time this.delivaryDetails.date}}</td>
+                                        <td>{{this.paymentMethod}}</td>
+
+
+                                        <td>₹ {{this.total}}</td>
+
+                                        <td>{{this.delivaryDetails.name}} <br>
+                                            {{this.delivaryDetails.email}} <br>
+
+
+                                        </td>
+
+
+
+
+
+                                    </tr>
+                                    {{/each}}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
