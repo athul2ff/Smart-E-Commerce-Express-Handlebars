@@ -156,10 +156,11 @@ usersHelpers.changepassword(req.body).then((responce)=>{
 })  
 })
 
-router.get('/addtocart/:id',(req,res)=>{             
+router.get('/addtocart/:id',async(req,res)=>{             
    if(req.session.userid){   
-    usersHelpers.addToCart(req.params.id,req.session.userid).then(()=>{
-     res.json({status:true})  
+    usersHelpers.addToCart(req.params.id,req.session.userid).then(async()=>{
+      let total=await usersHelpers.getTotalAmount(req.session.userid)
+     res.json({status:true,total})  
     })
   }else{
     res.redirect('/login')
