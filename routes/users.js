@@ -10,24 +10,25 @@ const client = require('twilio')(keys.accountsid, keys.authtoken);
 /* GET home page. */
  
 const veryfyuser= (req,res,next)=>{
-  if(req.session.userLoggedIn){
+  if(req.session.userLoggedIn){ 
     next()
   }else{
-    res.redirect('/login')
-  }
+    res.redirect('/login')   
+  } 
 }
 
 
 router.get('/', async(req,res) =>{
+  console.log(keys.accountsid);
   let CartCount=await userHelpers.getCartCount(req.session.userid)
   let total=await userHelpers.getTotalAmount(req.session.userid)
   let totalamount = total[0]
 
-  productHelpers.getAllproducts().then((products)=>{
+  productHelpers.getAllproducts().then((products)=>{   
     req.session.user=true
     res.render('user/index', {CartCount,totalamount,user:req.session.user,indexPage:true, products,userLoggedIn:req.session.userLoggedIn});
    
-  })
+  })   
 
 });
 
@@ -250,7 +251,7 @@ router.post('/verify-payment',(req,res)=>{
       res.json({status:true})
     })
   }).catch((err)=>{
-    res.json({status:false,errMsg:''})
+    res.json({status:false,errMsg:''}) 
   })
   
 })

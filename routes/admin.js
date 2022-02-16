@@ -6,11 +6,11 @@ const fileUpload=require('express-fileupload');
 const { response } = require('express');
 var base64ToImage =require('base64-to-image')
 
-
-
 /* GET admin listing. */
-router.get('/', function(req, res, next) {      
-  res.render('user/index',{admin:true})
+router.get('/', function(req, res, next) {  
+   
+
+  res.render('user/index',{admin:true}) 
 });
 
 router.get('/products',function (req,res) {
