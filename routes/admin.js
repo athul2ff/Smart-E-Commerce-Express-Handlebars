@@ -7,7 +7,7 @@ const { response } = require('express');
 var base64ToImage =require('base64-to-image')
 
 /* GET admin listing. */
-router.get('/', function(req, res, next) {  
+router.get('/', function(req, res, next) {   
    
 
   res.render('user/index',{admin:true}) 
@@ -170,10 +170,10 @@ router.post('/add-coupon',(req,res)=>{
     if(response===false){
       res.redirect('/admin/coupons')
     }else{
-      res.redirect('/admin/coupons')
+      res.redirect('/admin/coupons')   
     }
     console.log(response,"abcd");  
-   
+      
   })
   
 })

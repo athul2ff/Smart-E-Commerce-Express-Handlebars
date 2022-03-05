@@ -16,7 +16,7 @@ var app = express();
 
 var db=require('./config/connection');
 const { SafeString } = require('handlebars');
-const productHelpers = require('./helpers/product-helpers');
+const productHelpers = require('./helpers/product-helpers');   
 
 
 // view engine setup

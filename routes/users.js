@@ -7,28 +7,29 @@ const usersHelpers = require('../helpers/users-helpers');
 const { response } = require('express');
 const client = require('twilio')(keys.accountsid, keys.authtoken);
 
-/* GET home page. */
+
  
 const veryfyuser= (req,res,next)=>{
-  if(req.session.userLoggedIn){ 
+  if(req.session.userLoggedIn){
     next()
   }else{
-    res.redirect('/login')   
-  } 
+    res.redirect('/login')
+  }
 }
-
+   
+/* GET home page. */  
 
 router.get('/', async(req,res) =>{
-  console.log(keys.accountsid);
+  console.log(keys.accountsid, keys.authtoken);
   let CartCount=await userHelpers.getCartCount(req.session.userid)
   let total=await userHelpers.getTotalAmount(req.session.userid)
   let totalamount = total[0]
 
-  productHelpers.getAllproducts().then((products)=>{   
+  productHelpers.getAllproducts().then((products)=>{
     req.session.user=true
     res.render('user/index', {CartCount,totalamount,user:req.session.user,indexPage:true, products,userLoggedIn:req.session.userLoggedIn});
    
-  })   
+  })
 
 });
 
@@ -56,10 +57,12 @@ router.post('/submitSignupForm', function (req, res) {
   userHelpers.addUser(req.body).then((responce)=>{
     if(responce==false){
       req.session.signupErr=true
-      res.redirect('/Signup')  
+      res.redirect('/Signup')   
     }else{
-      req.session.userLoggedIn=true
+      req.session.userLoggedIn=true     
       mobile=parseInt(req.body.mobile) 
+ 
+
       client.verify.services(keys.serviceid)
              .verifications
              .create({to: '+91'+mobile, channel: 'sms'})
@@ -251,7 +254,7 @@ router.post('/verify-payment',(req,res)=>{
       res.json({status:true})
     })
   }).catch((err)=>{
-    res.json({status:false,errMsg:''}) 
+    res.json({status:false,errMsg:''})
   })
   
 })
