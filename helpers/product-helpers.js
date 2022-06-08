@@ -6,7 +6,7 @@ const { response } = require('express');
 module.exports={
 
     addProducts:async(product)=>{
-      console.log(product);
+      
         return new Promise (async(resolve,reject)=>{
        
           const data= await db.get().collection(collection.PRODUCT_COLLECTION).insertOne({
@@ -29,11 +29,14 @@ module.exports={
         let products= await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
         let menproducts= await db.get().collection(collection.PRODUCT_COLLECTION).find({category:"MEN"}).toArray()
         let womenproducts= await db.get().collection(collection.PRODUCT_COLLECTION).find({category:"WOMEN"}).toArray()
-        resolve({products,menproducts,womenproducts})
+        let kidsproducts= await db.get().collection(collection.PRODUCT_COLLECTION).find({category:"KIDS"}).toArray()
+
+        resolve({products,menproducts,womenproducts,kidsproducts})
         // resolve(products)
       })
       
     },
+    
     getProductData:(userId)=>{
         return new Promise(async(resolve,reject)=>{
        let product=await db.get().collection(collection.PRODUCT_COLLECTION).findOne({_id:ObjectId(userId)})
@@ -70,6 +73,80 @@ module.exports={
     getAllCoupon:async()=>{
       let coupon = db.get().collection(collection.COUPON_COLLECTIONS).find().toArray()
       return coupon
-    }
+    },
+    addOffers:async(data)=>{
+     
+      return new Promise (async(resolve,reject)=>{
+       
+        const offers= await db.get().collection(collection.OFFERS_COLLECTIONS).insertOne({
+          offer1:data.percentage1,
+          offer2:data.percentage2,
+          brand1:data.brand1,
+          brand2:data.brand2
+
+          
+        }); 
+   
+         resolve(offers.insertedId)             
+      })
+      
+     
+    },
+    getOffersData:()=>{
+      return new Promise (async(resolve,reject)=>{
+        let offerdata= await db.get().collection(collection.OFFERS_COLLECTIONS).find().sort({_id:-1}).limit(1).toArray()
+
+        resolve(offerdata)
+      });
+         
+    },
+
+    serchProduct:(data)=>{
+      return new Promise (async(resolve,reject)=>{
+        if (data.type == "null"){
+         let products= await db.get().collection(collection.PRODUCT_COLLECTION).find({$or:[{"title":data.searchkey},{"brand":data.searchkey},{"category":data.searchkey}]}).toArray()
+         resolve(products)
+        }else if(data.type == "men"){
+          
+          let products= await db.get().collection(collection.PRODUCT_COLLECTION).find({$and:[{"category":"MEN"},{$or:[{"title":data.searchkey},{"brand":data.searchkey},{"category":data.searchkey}]}]}).toArray()
+
+          console.log("men collections");
+          
+          resolve(products)
+
+        }else if(data.type == "women"){
+
+          let products= await db.get().collection(collection.PRODUCT_COLLECTION).find({$and:[{"category":"WOMEN"},{$or:[{"title":data.searchkey},{"brand":data.searchkey},{"category":data.searchkey}]}]}).toArray()
+
+          console.log("wonem collections");
+          resolve(products)
+
+        }
+        else{
+          let products= await db.get().collection(collection.PRODUCT_COLLECTION).find({$and:[{"category":"KIDS"},{$or:[{"title":data.searchkey},{"brand":data.searchkey},{"category":data.searchkey}]}]}).toArray()
+
+          console.log("kids collections");
+          if (products == null){
+            console.log("products is empty");
+          }
+          resolve(products)
+        }
+        resolve()
+      })
+    },
+
+
+    offerProducts:(data)=>{
+      return new Promise (async(resolve,reject)=>{
+        let products = await db.get().collection(collection.PRODUCT_COLLECTION).find({"brand":data}).toArray()
+        console.log(products);
+        console.log("jellosjdofjskdjf");
+        resolve(products)
+
+      })
+  
+    } ,
+    
+    
     
 }

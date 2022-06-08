@@ -1,0 +1,72 @@
+<!-- banner -->
+<div class="page-head">
+	<div class="container">
+		<h3>Women's Wear</h3>
+	</div>
+</div>
+<!-- //banner -->
+             <div class="product-easy">
+	<div class="container">
+		
+				<div class="resp-tabs-container">
+					                        {{#each products.womenproducts}}
+						<div class="col-md-3 product-men" style="margin-bottom: 30px;">
+                          
+							<div class="men-pro-item simpleCart_shelfItem">
+								<div class="men-thumb-item">
+									<img src="/images/admin/img/product-images/{{this._id}}_1.jpg" alt="" class="pro-image-front">
+									<img src="/images/admin/img/product-images/{{this._id}}_1.jpg" alt="" class="pro-image-back">
+										<div class="men-cart-pro">
+											<div class="inner-men-cart-pro">
+												<a href="/singelview/{{this._id}}" class="link-product-add-cart">Quick View</a>
+											</div>
+										</div>
+										<span class="product-new-top">New</span>
+										
+								</div>
+								<div class="item-info-product ">
+									<h4><a href="single.html">{{this.title}}</a></h4>
+									<div class="info-product-price">
+										<span class="item_price">₹{{this.offer}}</span>
+										<del>₹{{this.price}}</del>
+									</div>
+									{{!-- <a href="/addtocart/{{this._id}}" class="item_add single-item hvr-outline-out button2">Add to cart</a>		 --}}
+						    	<a  class="item_add single-item hvr-outline-out button2 " onclick="addToCart('{{this._id}}')" >Add to cart</a>
+								</div>
+							</div>
+                         
+						</div>
+                        {{/each}}
+						</div>
+							
+							</div>
+						</div>						
+					
+     <script>
+
+		function addToCart(proId) {
+			$.ajax({
+				url: '/addtocart/' + proId,
+				method: 'get',
+				success: (response) => {
+					if (response.status) {
+						let count = $('#CartCount').html()
+						count = parseInt(count)
+						count = count + 1
+						document.getElementById('CartCount').innerHTML = count
+                       console.log(response.total[0].total)
+                        document.getElementById('toptotal').innerHTML=response.total[0].total
+						alert('Item add to Cart')
+
+					}else{
+						 alert('login your account first')
+					     	let count = 0	
+						document.getElementById('CartCount').innerHTML = count
+					}
+
+				}
+			})
+		}
+
+
+	</script> 					

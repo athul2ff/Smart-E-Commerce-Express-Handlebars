@@ -2,12 +2,12 @@ var createError = require('http-errors');
 var express = require('express');
 const fileUpload=require('express-fileupload')
 
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+var path = require('path'); 
+var cookieParser = require('cookie-parser'); 
+var logger = require('morgan');         
 var hbs = require ('express-handlebars')    
 const session=require('express-session')
-const handlebarsHelpers =require('handlebars')
+const handlebarsHelpers =require('handlebars')          
 
 var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin'); 
@@ -23,7 +23,7 @@ const productHelpers = require('./helpers/product-helpers');
 
 app.use(session({
   secret: 'mYsEcReTkEy',
-  cookie:{maxAge:100000000},
+  cookie:{maxAge:100000000}, 
   resave: true,  
   saveUninitialized: true
   
@@ -48,8 +48,92 @@ db.connect((err)=>{
   if(err) console.log('database connetion Err');
   else    console.log('database connected successfully');    
 })
+
 app.use('/', usersRouter);
 app.use('/admin', adminRouter);
+
+//admin header
+
+handlebarsHelpers.registerHelper("offers" , (value)=>{
+  if (value === "offers"){
+    return new handlebarsHelpers.SafeString(`class="nav-item active"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="nav-item"`)
+  }
+})
+
+handlebarsHelpers.registerHelper("graph" , (value)=>{
+  if (value === "graph"){
+    return new handlebarsHelpers.SafeString(`class="nav-item active"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="nav-item"`)
+  }
+})
+handlebarsHelpers.registerHelper("user" , (value)=>{
+  if (value === "user"){
+    return new handlebarsHelpers.SafeString(`class="nav-item active"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="nav-item"`)
+  }
+})
+handlebarsHelpers.registerHelper("products" , (value)=>{
+  if (value === "products"){
+    return new handlebarsHelpers.SafeString(`class="nav-item active"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="nav-item"`)
+  }
+})
+handlebarsHelpers.registerHelper("orders" , (value)=>{
+  if (value === "orders"){
+    return new handlebarsHelpers.SafeString(`class="nav-item active"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="nav-item"`)
+  }
+})
+handlebarsHelpers.registerHelper("coupons" , (value)=>{
+  if (value === "coupons"){
+    return new handlebarsHelpers.SafeString(`class="nav-item active"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="nav-item"`)
+  }
+})
+
+// user-header
+handlebarsHelpers.registerHelper("home",(value)=>{
+  if(value === "home"){
+    return new handlebarsHelpers.SafeString(`class="active menu__item menu__item--current"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="dropdown menu__item"`)
+  }
+})
+handlebarsHelpers.registerHelper("men",(value)=>{
+  if(value === "men"){
+    return new handlebarsHelpers.SafeString(`class="active menu__item menu__item--current"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="dropdown menu__item"`)
+  }
+})
+handlebarsHelpers.registerHelper("women",(value)=>{
+  if(value === "women"){
+    return new handlebarsHelpers.SafeString(`class="active menu__item menu__item--current"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="dropdown menu__item"`)
+  }
+})
+handlebarsHelpers.registerHelper("kids",(value)=>{
+  if(value === "kids"){
+    return new handlebarsHelpers.SafeString(`class="active menu__item menu__item--current"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="dropdown menu__item"`)
+  }
+})
+handlebarsHelpers.registerHelper("contact",(value)=>{
+  if(value === "contact"){
+    return new handlebarsHelpers.SafeString(`class="active menu__item menu__item--current"`)
+  }else{
+    return new handlebarsHelpers.SafeString(`class="dropdown menu__item"`)
+  }
+})
 
 
 
@@ -147,7 +231,7 @@ handlebarsHelpers.registerHelper("block",(status,userId)=>{
 })
 
 handlebarsHelpers.registerHelper("dueAmount",(total,status)=>{ 
-  let zero=0
+  let zero=0 
   if(status==="cod"){
     return new handlebarsHelpers.SafeString(`${total}`)
   }else{
@@ -166,7 +250,6 @@ handlebarsHelpers.registerHelper("checkOrderStatus1",(status)=>{
   if(status=="shipped"){
     return new handlebarsHelpers.SafeString(`selected`)
   }
-  console.log(status,"helloooooo world")
 })
 
 

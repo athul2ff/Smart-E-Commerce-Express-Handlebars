@@ -47,8 +47,9 @@
 
 <body class="dark-edition">
   <div class="wrapper ">
-
+ 
     {{>admin-header}}
+   
 
     <div class="main-panel">
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
@@ -323,8 +324,13 @@ input[type="checkbox"] {
   {{>user-header}}
   {{/if}}
   {{{body}}}
+  {{#if loginpage}}
+  {{else}}
+
+  {{>user-footer}}
   
- 
+  {{/if}}
+
   <script src="/vendor/select2/select2.min.js"></script>
   <script src="/vendor/datepicker/moment.min.js"></script>
   <script src="/vendor/datepicker/daterangepicker.js"></script>

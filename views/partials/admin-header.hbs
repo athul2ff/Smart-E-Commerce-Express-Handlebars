@@ -1,58 +1,50 @@
-<div class="sidebar" data-color="azure" data-background-color="black" data-image="/assets/img/sidebar-2.jpg">
-      <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+      
+     <div class="sidebar" data-color="purple" data-background-color="black" data-image="../assets/img/sidebar-2.jpg">
 
-        Tip 2: you can also add an image using data-image tag
-    -->
       <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
           Creative Tim
         </a></div>
       <div class="sidebar-wrapper">
         <ul class="nav">
-          <li class="nav-item  ">
-            <a class="nav-link" href="./dashboard.html">
+          <li {{graph currentPage}} >
+            <a class="nav-link" href="/admin">
               <i class="material-icons">dashboard</i>
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li {{user currentPage}}>
             <a class="nav-link" href="/admin/user">
               <i class="material-icons">person</i>
               <p>Users Details</p>
             </a>
           </li>
-          <li class="nav-item active ">
+          <li {{products currentPage}}>
             <a class="nav-link" href="/admin/products">
               <i class="material-icons">content_paste</i>
               <p>Products Details</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li {{orders currentPage}}>
             <a class="nav-link" href="/admin/orders">
               <i class="material-icons">library_books</i>
               <p>Orders</p>
             </a>
           </li>
-          <li class="nav-item ">
+          <li {{coupons currentPage}}>
             <a class="nav-link" href="/admin/coupons">
-              <i class="material-icons">bubble_chart</i>
+              <i class="material-icons">bubble_chart</i> 
               <p>Coupons</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="./map.html">
-              <i class="material-icons">location_ons</i>
-              <p>Maps</p>
+         <li {{offers currentPage}}>
+            <a class="nav-link" href="/admin/addOffers">
+              <i class="material-icons">library_books</i>
+              <p>Add Offers</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="./notifications.html">
-              <i class="material-icons">notifications</i>
-              <p>Notifications</p>
-            </a>
-          </li>
+
         </ul>
       </div>
-    </div>
-      <!-- Navbar -->
+    </div> 
    
+  

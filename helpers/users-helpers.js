@@ -6,6 +6,7 @@ const { response } = require('express')
 // var ObjectId=require('mongodb').ObjectId  
 const Razorpay = require('razorpay')
 const { resolve } = require('path')
+const { AuthorizationDocumentList } = require('twilio/lib/rest/preview/hosted_numbers/authorizationDocument')
 var instance = new Razorpay({
     key_id: 'rzp_test_79XxtKjzAHhMKG',
     key_secret: 'VA9JMYudQ0wCfbBCXCErvJbg',
@@ -295,7 +296,7 @@ module.exports = {
       },
 
       placeOrder:(order,product,total,userId)=>{
-         
+          db.get().collection(collection.ADDRESS_COLLECTIONS).findOneAndDelete({"userId":userId})
           let abc=product
          
           return new Promise(async(resolve,reject)=>{
@@ -335,7 +336,7 @@ module.exports = {
                  userId:ObjectId(userId),
                  paymentMethod:order.paymentMethod,
                  products:abc,
-                 total:total[0].total,  
+                 total:total[0].total ,  
                  status:status,
                  grandTotal:order.grandTotal,
                  statusupdate:"received"
@@ -565,11 +566,46 @@ module.exports = {
 
     getAddress:async(userId)=>{
         let address=await db.get().collection(collection.ADDRESS_COLLECTIONS).find({userId:userId}).toArray()
-        return address
+        return (address)
+    },
+
+    singleTotal:async(productid)=>{
+        let proId= productid.slice(1);
+        let product = await db.get().collection(collection.PRODUCT_COLLECTION).find({_id:ObjectId(proId)}).toArray()
+        return product
+    },
+
+    getTotalOrders:async()=>{
+        let totalOrders= await db.get().collection(collection.ORDER_COLLECTIONS).count()
+        return(totalOrders)
+    },
+    
+    getTotalRevenue:async()=>{
+        let revenue =0
+        let orders= await db.get().collection(collection.ORDER_COLLECTIONS).find({statusupdate:"delivered"}).toArray()
+        let count = await db.get().collection(collection.ORDER_COLLECTIONS).find({statusupdate:"delivered"}).count()
+
+             for(i=0;i<count;i++){
+                 let num1=parseInt(orders[i].grandTotal)
+                 revenue=revenue+num1
+             }
+
+             
+        return revenue
+    },
+
+    pendingOrdersCount:async()=>{
+        let count = db.get().collection(collection.ORDER_COLLECTIONS).find({statusupdate:"received"}).count()
+
+        return count
+    },
+
+    usersCount:async()=>{
+        let count =await db.get().collection(collection.USER_COLLECTION).count()
+
+        return count
     }
-
-  
-
+    
 
  
 

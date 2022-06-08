@@ -1,0 +1,196 @@
+<div id="boc">
+  <br>
+  <h1 id="title" style="color: aliceblue;" hidden>Product Sample Request Form</h1>
+  <div id="form-outer">
+    <p id="description">
+     Add offers on specific brand  below ; fillout offer-Box1 and offer-box2
+    </p>
+    <h4>offer panel-1</h4>
+    <form action="/admin/postOffers" method="POST" enctype="multipart/form-data">
+
+      <div class="rowTab">
+        <div class="labeled">
+          <label for="brand1">Enter the brand Name :</label>
+        </div>
+        <div class="rightelement">
+          <input type="text" name="brand1" class="inputs" placeholder="enter brand name">
+        </div>
+      </div>
+
+      <div class="rowTab">
+        <div class="labeled">
+          <label for="percentage1">Change Offer Percentage %</label>
+        </div>
+        <div class="rightelement">
+          <input type="number" name="percentage1" class="inputs" placeholder="enter quantity">
+        </div>
+      </div>
+
+      <div class="rowTab">
+        <div class="labeled">
+          <label  for="offerImage1">Change Logo</label>
+        </div>
+        <div class="rightelement">
+           
+           <input class="inputs" type="file" accept="image/*" name="offerImage1" >
+        </div>
+
+      </div>
+        <br> <h4>offer panel-2</h4>
+
+      <div class="rowTab">
+        <div class="labeled">
+          <label for="brand2">Enter the brand Name :</label>
+        </div>
+        <div class="rightelement">
+          <input type="text" name="brand2" class="inputs" placeholder="enter brand name">
+        </div>
+      </div>  
+
+      <div class="rowTab">
+        <div class="labeled">
+          <label for="percentage2">Change Offer Percentage %</label>
+        </div>
+        <div class="rightelement">
+          <input type="number" name="percentage2" class="inputs" placeholder="enter quantity">
+        </div>
+      </div>
+
+      <div class="rowTab">
+        <div class="labeled">
+          <label  for="offerImage2">Change Logo</label>
+     </div>
+        <div class="rightelement">
+             <input class="inputs" type="file" accept="image/*" name="offerImage2"  class="js-photo-upload" >
+        </div>
+
+      </div>
+      
+
+      <button id="submit" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<style>
+  @import url(https://fonts.googleapis.com/css?family=Raleway:400,500);
+
+
+  headers {
+    font-size: 2em;
+    font-weight: bold;
+    margin: 20px;
+  }
+
+  #form-outer {
+    background-color: rgba(218, 61, 61, 0.87);
+    margin: 0 auto;
+    border-radius: 4px;
+    width: 75%;
+    max-width: 900px;
+    padding: 10px;
+    padding-top: 20px;
+  }
+
+  #boc {
+    text-align: center;
+    font-family: 'Raleway', Helvetica, sans-serif;
+    min-width: 320px;
+  }
+
+  .labeled {
+    display: inline-block;
+    text-align: right;
+    width: 40%;
+    padding: 5px;
+    vertical-align: top;
+    margin-top: 10px;
+  }
+
+  .rightelement {
+    display: inline-block;
+    text-align: left;
+    width: 48%;
+    vertical-align: middle;
+  }
+
+  .inputs {
+    height: 30px;
+    width: 280px;
+    padding: 5px;
+    margin: 10px;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+  }
+
+  #userAge {
+    width: 40px;
+  }
+
+  .rating,
+  input[type="checkbox"] {
+    float: left;
+    margin-right: 5px;
+  }
+
+  #submit {
+    background-color: #59ace0;
+    border-radius: 4px;
+    color: white;
+    font-size: 1em;
+    height: 40px;
+    width: 96px;
+    margin: 10px;
+    border: 0px solid;
+  }
+
+  .dropdown {
+    height: 35px;
+    width: 140px;
+    padding: 5px;
+    margin: 10px;
+    margin-top: 15px;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+  }
+
+  .radio,
+  .checkbox {
+    position: relative;
+    left: -43px;
+    margin-left: 10px;
+    display: block;
+    padding-bottom: 10px;
+  }
+
+  @media screen and (max-width: 833px) {
+    .inputs {
+      width: 80%;
+    }
+
+    select {
+      width: 90%;
+    }
+  }
+
+  @media screen and (max-width: 520px) {
+    .labeled {
+      width: 100%;
+      text-align: left;
+    }
+
+    .rightelement {
+      width: 80%;
+      float: left;
+    }
+
+    .inputs {
+      width: 100%;
+    }
+
+    select {
+      width: 100%;
+    }
+  }
+</style>
+

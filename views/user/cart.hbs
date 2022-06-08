@@ -1,11 +1,4 @@
 
-{{!-- <head>
-	  <script src="https://unpkg.com/jquery@3/dist/jquery.min.js" crossorigin="anonymous"></script>
-
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      
-</head> --}}
-
 <!-- banner -->
 <div class="page-head">
 	<div class="container">
@@ -16,10 +9,11 @@
 <!-- check out -->
 <div class="checkout">
 	<div class="container">
+		
 		{{!-- <h1>{{userId}}ll</h1> --}}
 		<h3>My Shopping Bag</h3>
 		<div class="table-responsive checkout-right animated wow slideInUp" data-wow-delay=".5s">
-			<t	able class="timetable_sub">
+			<table class="timetable_sub">
 				<thead>
 					<tr>
 						<th>Remove</th>
@@ -39,17 +33,13 @@
 						
 					</td>
 
-					<td class="invert-image"><a href="/singelview/{{this.products._id}}"><img
-								src="/images/admin/img/product-images/{{this.products._id}}_1.jpg" alt=" "
-								class="img-responsive" /></a></td>
+					<td class="invert-image"><a href="/singelview/{{this.products._id}}"><img src="/images/admin/img/product-images/{{this.products._id}}_1.jpg" alt=" " class="img-responsive" /></a></td>
 					<td class="invert">
 
 						<div class="quantity">
 							<div class="quantity-select">
 								<div class="entry value-minus"  
-								onclick="changeQty('{{this._id}}','{{this.products._id}}','{{../userId}}',-1)"
-								
-								></div>
+								onclick="changeQty('{{this._id}}','{{this.products._id}}','{{../userId}}',-1)"></div>
 								<div class="entry value"><span  id="{{this.products._id}}">{{this.quantity}}</span></div>
 								<div class="entry value-plus active"
 									onclick="changeQty('{{this._id}}','{{this.products._id}}','{{../userId}}',1)"></div>
@@ -68,8 +58,7 @@
 		<div class="checkout-left">
 
 			<div class="checkout-right-basket animated wow slideInRight" data-wow-delay=".5s">
-				<a href="mens.html"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Back To
-					Shopping</a>
+				<a href="/view-orders"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>Track Orders</a>
 			</div>
 			<div class="checkout-left-basket animated wow slideInLeft" data-wow-delay=".5s">
 				<h4>Shopping basket</h4>
@@ -86,35 +75,7 @@
 	</div>
 </div>
 <!-- //check out -->
-<!-- //product-nav -->
-<div class="coupons">
-	<div class="container">
-		<div class="coupons-grids text-center">
-			<div class="col-md-3 coupons-gd">
-				<h3>Buy your product in a simple way</h3>
-			</div>
-			<div class="col-md-3 coupons-gd">
-				<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-				<h4>LOGIN TO YOUR ACCOUNT</h4>
-				<p>Neque porro quisquam est, qui dolorem ipsum quia dolor
-			sit amet, consectetur.</p>
-			</div>
-			<div class="col-md-3 coupons-gd">
-				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-				<h4>SELECT YOUR ITEM</h4>
-				<p>Neque porro quisquam est, qui dolorem ipsum quia dolor
-			sit amet, consectetur.</p>
-			</div>
-			<div class="col-md-3 coupons-gd">
-				<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span>
-				<h4>MAKE PAYMENT</h4>
-				<p>Neque porro quisquam est, qui dolorem ipsum quia dolor
-			sit amet, consectetur.</p>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-	</div>
-</div>
+
  
  <script>
 	 function changeQty(cartId,proId,userId,count){

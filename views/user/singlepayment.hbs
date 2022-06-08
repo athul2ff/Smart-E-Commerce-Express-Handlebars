@@ -5,10 +5,8 @@
 
 		<div class="shopper-informations">
 			<div class="row">
-				{{#each address}}
+
 				
-				<h1>{{this.delivaryDetails.email}}</h1>
-				{{/each}}
 				<form id="checkout-form" action="">
 					<div class="col-12 col-md-8">
 						
@@ -17,6 +15,7 @@
 							<label>Name</label>
 							<input type="text" class="form-control" name="name" placeholder=" Enter your Name" value="{{address.name}}">
 						</div>
+						
 						<div class="form-group col-sm-6">
 							<label>Mobile Number</label>
 							<input type="number" class="form-control" name="mobile" placeholder="Phone Number" value="{{address.mobile}}">
@@ -27,15 +26,15 @@
 						</div>
 						<div class="form-group col-sm-6">
 							<label>Alternative Mobile Number</label>
-							<input type="text" class="form-control" name="mobile2" placeholder=" mobile number" value="{{address.mobile}}">
+							<input type="text" class="form-control" name="mobile2" placeholder=" alt mobile number" value="{{address.altMobile}}">
 						</div>
 						<div class="form-group col-sm-6">
 							<label>Pincode</label>
-							<input type="text" class="form-control" name="pincode" placeholder=" enter pincode" value="{{address.pincode}}">
+							<input type="text" class="form-control" name="pincode" placeholder=" Email Address" value="{{address.pincode}}">
 						</div>
 						<div class="form-group col-sm-6">
 							<label>Landmark</label>
-							<input type="text" class="form-control" name="landmark" placeholder=" Landmark" value="{{address.country}}">
+							<input type="text" class="form-control" name="country" placeholder=" Landmark" value="{{address.country}}">
 						</div>
 						<div class="form-group col-sm-6">
 							<label>State</label>
@@ -47,8 +46,8 @@
 						</div>
 						<div class="form-group col-sm-6">
 							<label>Street Address</label>
-							<textarea class="form-control" name="" id="" cols="30" rows="2" placeholder="Street Address">{{address.address}}</textarea>
-							{{!-- <input type="text" class="form-control" name="landmark" placeholder="Street Address"> --}}
+							<textarea class="form-control" name="address" id="" cols="30" rows="2" placeholder="Street Address" >{{address.address}}</textarea>
+							
 						</div>
 						<br>
 
@@ -59,9 +58,10 @@
 							<li class="list-group-item d-flex justify-content-between lh-condensed">
 								<div>
 									<h5 class="my-0">shopping list</h5>
-									{{#each products}}
-									<small class="text-muted">{{this.products.title}}</small><br>
-									{{/each}}
+									
+									
+									<small class="text-muted">{{productDetals.title}}</small><br>
+									
 								</div>
 
 								{{!-- {{#if credits}} <span class="text-muted">₹{{credits}}</span>{{else}}<span
@@ -75,6 +75,7 @@
 									 
 									<div class="col-6" style="margin-left: 1em;">
                                      <input type="text"  name="" id="coupon" placeholder="Enter CouponCode">
+									 <input type="text" id="helloworld" value="{{productDetals.offer}}" hidden>
 									</div>
 									<div class="col-6" style="margin-left: 1em;"  >
 										
@@ -88,7 +89,7 @@
 							</li> 
 							<li class="list-group-item d-flex justify-content-between">
 								<span>Total (Rupees)</span>
-								<strong style="float: right;" id="totalAmount">{{totalamount.total}}</strong>
+								<strong style="float: right;" id="totalAmount">{{productDetals.offer}}</strong>
 							</li>
 							<li class="list-group-item d-flex justify-content-between">
 								<span> Coupon Discount</span>
@@ -96,7 +97,7 @@
 							</li>
 							<li class="list-group-item d-flex justify-content-between">
 								<span>Grand Total (Rupees)</span>
-								<strong style="float: right;" id="grandTotal">{{totalamount.total}}</strong>
+								<strong style="float: right;" id="grandTotal">{{productDetals.offer}}</strong>
 							</li>
 
 							
@@ -119,8 +120,8 @@
 
 								</div>
 								<div style="margin-top: 7%;">
-									<input type="number" id="grndtotal" name="grandTotal" placeholder=" Email Address" value="{{totalamount.total}}" hidden>
-
+									<input type="number" id="grndtotal" name="grandTotal" placeholder=" Email Address" value="{{productDetals.offer}}" hidden>
+                                    <input type="text" name="productId" value ="{{productId}}" hidden>
 									<button type="submit" class="btn btn-success text-dark">Continue to Payment</button>
 								</div><br>
 
@@ -137,7 +138,7 @@
 	$('#checkout-form').submit((e) => {
 		e.preventDefault()
 		$.ajax({
-			url: '/placeorder',
+			url: '/placeorder1',
 			method: 'post',
 			data: $('#checkout-form').serialize(),
 			success: (response) => {
@@ -163,9 +164,9 @@
 			"image": "https://example.com/your_logo",
 			"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
 			"handler": function (response) {
-				alert(response.razorpay_payment_id);
-				alert(response.razorpay_order_id);
-				alert(response.razorpay_signature)
+				
+				
+				
 
 				verifyPayment(response, order)
 			},
@@ -207,14 +208,16 @@
 	//check coupon
 	 function checkCoupon(total){
 		 let couponCode=document.getElementById('coupon').value;
+		 let totalAmount=document.getElementById('helloworld').value
     $.ajax({
-		url:'/coupon',
+		url:'/coupon-single',
 		data:{
-			couponCode
+			couponCode,
+			totalAmount
 		},
 		method:'post',
 		success:(response)=>{
-			console.log(response.grandTotal)
+			console.log(response)
 			if(response.couponStatus == false){
 				document.getElementById('couponErr').style.display='block'
 			}else{
