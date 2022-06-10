@@ -37,7 +37,7 @@ router.get('/', async(req,res) =>{
   var pageStatus ="home"
   let offer =await productHelpers.getOffersData()
   let offers=offer[0]
-     console.log(offers);
+    
  
   productHelpers.getAllproducts().then((products)=>{
     req.session.user=true
@@ -128,13 +128,14 @@ router.post('/submitSignupForm',  async (req, res) =>{
     }else{
       req.session.userLoggedIn=true     
       mobile=parseInt(req.body.mobile) 
- 
+      let loginpage=true
+     
 
       client.verify.services(keys.serviceid)
              .verifications
              .create({to: '+91'+mobile, channel: 'sms'})
              .then((verification) => {
-               res.render('user/forgotpassword',{user:true,mobile,otpErr:req.session.otpErr})   
+               res.render('user/forgotpassword',{loginpage,user:mobile,otpErr:req.session.otpErr})   
                req.session.otpErr=false   
               }
                ).catch((err)=>{
