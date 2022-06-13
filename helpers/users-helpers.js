@@ -17,6 +17,42 @@ var instance = new Razorpay({
   
 module.exports = {  
 
+    getOrderprodut1:(proId) => {
+        return new Promise(async(resolve, reject) => {
+            let products=await db.get().collection(collection.ORDER_COLLECTIONS).aggregate([
+                {
+                    $match:{_id:ObjectId(proId)}
+                },
+                {
+                    $unwind:"$products"
+                },
+                {
+                    $project:{
+                        item:"$products",
+                        
+                    }
+                },
+                {
+                    $lookup:{
+                        from:'products',
+                        localField:'item',
+                        foreignField:'_id',
+                        as:'products'
+                    }
+                },
+                {
+                    $project:{
+                        item:1,products:{$arrayElemAt:['$products',0]}
+                    }
+                }
+            ]).toArray()
+
+        
+            resolve(products)
+        
+        })
+    },
+
 
     addUser: (usersData) => {
         return new Promise(async (resolve, reject) => {
@@ -31,12 +67,12 @@ module.exports = {
                     status:"unblock"
                  }
 
-                db.get().collection('userdetails').insertOne(userdata).then((data) => {
-                    
-                    resolve(data)
-                })
+                db.get().collection('userdetails').insertOne(userdata)
+                let user = await db.get().collection(collection.USER_COLLECTION).findOne({ email: usersData.email })
+                resolve(user)
+
             } else {
-                console.log("user alredy exists");
+              
                 resolve(false)
             }
 
@@ -58,7 +94,7 @@ module.exports = {
                            
                 }) 
             }else{
-                resolve(status)
+                resolve()
             }
             
         
@@ -137,7 +173,7 @@ module.exports = {
             let userCart=await db.get().collection(collection.CART_COLLECTION).findOne({user:ObjectId(userId)})
             if(userCart){   
                 let proExist=userCart.products.findIndex(products=>products.item==proId)
-                console.log(proExist);
+              
                 
                 if(proExist != -1){
                     db.get().collection(collection.CART_COLLECTION)
@@ -294,6 +330,67 @@ module.exports = {
           resolve(total)
         })  
       },
+      placeOrder1:(order,product,total,userId)=>{
+       
+        db.get().collection(collection.ADDRESS_COLLECTIONS).findOneAndDelete({"userId":userId})
+        let abc=product
+       
+        return new Promise(async(resolve,reject)=>{
+           let status=await order.paymentMethod=='cod'?'placed':'pending'
+           let address={
+              userId:userId,
+              delivaryDetails:{
+                  name:order.name,
+                  mobile:order.mobile,
+                  altMobile:order.mobile2,
+                  email:order.email,
+                  pincode:order.pincode,
+                  country:order.country,
+                  state:order.state,
+                  city:order.city,
+                  landmark:order.landmark,
+                  address:order.address,
+                  
+               }
+           }
+          
+           let orderObj={
+               delivaryDetails:{
+                  name:order.name,
+                  mobile:order.mobile,
+                  altMobile:order.mobile2,
+                  email:order.email,
+                  pincode:order.pincode,
+                  country:order.country,
+                  state:order.state,
+                  city:order.city,
+                  landmark:order.landmark,
+                  address:order.address,
+                  date:new Date()
+                  
+               },
+               userId:ObjectId(userId),
+               paymentMethod:order.paymentMethod,
+               products:abc,
+               total:order.grandTotal ,  
+               status:status,
+               grandTotal:order.grandTotal,
+               statusupdate:"received"
+           }
+           db.get().collection(collection.ADDRESS_COLLECTIONS).insertOne(address)
+           db.get().collection(collection.ORDER_COLLECTIONS).insertOne(orderObj).then((response)=>{
+
+               db.get().collection(collection.CART_COLLECTION).deleteOne({user:ObjectId(userId)})
+               
+               
+               resolve(response.insertedId.toString())
+
+           })
+
+
+        })  
+
+    },
 
       placeOrder:(order,product,total,userId)=>{
           db.get().collection(collection.ADDRESS_COLLECTIONS).findOneAndDelete({"userId":userId})
@@ -377,7 +474,7 @@ module.exports = {
               receipt:""+orderId
             };
             instance.orders.create(options, function(err, order) {
-              console.log(order);
+            
               resolve(order)
             });
           })
@@ -424,7 +521,10 @@ module.exports = {
         })
     },
 
-    getOrderproduct:(orderId)=>{
+    getOrderproduct: async(orderId)=>{
+
+
+
 
         return new Promise(async(resolve,reject)=>{
             let orderItems=await db.get().collection(collection.ORDER_COLLECTIONS).aggregate([
@@ -455,7 +555,9 @@ module.exports = {
             }
 
           ]).toArray()
+         
           resolve(orderItems)
+         
         })
     },
 
@@ -553,23 +655,18 @@ module.exports = {
     validateCoupon:async(couponcode)=>{
 
        let coupon=await db.get().collection(collection.COUPON_COLLECTIONS).findOne({code:couponcode})
-       console.log(coupon,"exist hewareeeee");
+    
        return coupon;
     },
 
-    lessCouponDiscount:async(userId,couponAmount)=>{
-        console.log(userId,"less");
-        let total =await db.get().collection(collection.CART_COLLECTION).findOne({user:ObjectId(userId)})
-        console.log(subtotal);
-        return(subtotal)
-    },
-
+   
     getAddress:async(userId)=>{
         let address=await db.get().collection(collection.ADDRESS_COLLECTIONS).find({userId:userId}).toArray()
         return (address)
     },
 
     singleTotal:async(productid)=>{
+        
         let proId= productid.slice(1);
         let product = await db.get().collection(collection.PRODUCT_COLLECTION).find({_id:ObjectId(proId)}).toArray()
         return product

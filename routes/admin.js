@@ -32,7 +32,7 @@ router.get('/user',function(req,res,next){
   var currentPage = "user"
 usersHelpers.getAllusers().then((user)=>{
   
-  // console.log(user); 
+ 
   res.render('admin/user',{admin:true,topview:true,user,currentPage});    
 
 });
@@ -111,8 +111,8 @@ router.get('/editproduct/:id',(req,res)=>{
 router.post ('/postOffers',(req,res)=>{
   
   productHelpers.addOffers(req.body).then((response)=>{
-    console.log(response);
-    console.log(typeof( req.files.offerImage1)+"hello athul");
+   
+   
     let image1=req.files.offerImage1
     let image2=req.files.offerImage2
     image1.mv('./public/images/offer/'+response+'1'+'.jpg',(err,done)=>{
@@ -123,7 +123,7 @@ router.post ('/postOffers',(req,res)=>{
           if(err){
             console.log(err);
           }else{
-            res.send("hello")
+            res.redirect("/admin")
           }
         })
         
@@ -146,7 +146,7 @@ router.post('/updateproducts/:id',(req,res)=>{
   let productId=req.params.id
   let newData=req.body
   productHelpers.editProduct(productId,newData).then((response)=>{
-    console.log(req.files);
+   
     if(req.files==null){
       res.redirect('/admin/products')
     }else{
@@ -228,7 +228,7 @@ router.post('/add-coupon',(req,res)=>{
     }else{
       res.redirect('/admin/coupons')                  
     }
-    console.log(response,"abcd");  
+   
       
   })
   

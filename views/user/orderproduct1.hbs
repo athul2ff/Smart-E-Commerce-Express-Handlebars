@@ -1,14 +1,14 @@
 <div class="container"> <br> <br>
       <h2 style="text-align: center;">porducts</h2>
     <div class="row"  style="margin-top: 30px;">
-       {{#each products}}
+      
 
             <div class="col-md-3 product-men" style="margin-bottom: 30px;">
                           
 							<div class="men-pro-item simpleCart_shelfItem">
 								<div class="men-thumb-item">
-									<img src="/images/admin/img/product-images/{{this.products._id}}_1.jpg" alt="" class="pro-image-front">
-									<img src="/images/admin/img/product-images/{{this.products._id}}_1.jpg" alt="" class="pro-image-back">
+									<img src="/images/admin/img/product-images/{{products._id}}_1.jpg" alt="" class="pro-image-front">
+									<img src="/images/admin/img/product-images/{{products._id}}_1.jpg" alt="" class="pro-image-back">
 										<div class="men-cart-pro">
 											
 										</div>
@@ -16,18 +16,18 @@
 										
 								</div>
 								<div class="item-info-product ">
-									<h4><a href="single.html">{{this.products.title}}</a></h4>
+									<h4><a href="single.html">{{products.title}}</a></h4>
 									<div class="info-product-price">
-										<span class="item_price">Price :{{this.products.offer}}</span>
+										<span class="item_price">Price :{{products.offer}}</span>
 										
 									</div>
                                    
-                                    <span>Size :{{this.products.size}}</span>
+                                    <span>Size :{{products.size}}</span>
 								</div>
 							</div>
                          
 						</div>
-        {{/each}}
+       
 		<h1></h1>
 		
     </div>

@@ -7,7 +7,7 @@
 			<div class="row">
 
 				
-				<form id="checkout-form" action="">
+				<form id="checkout-form1" action="">
 					<div class="col-12 col-md-8">
 						
 						<div class="form-group">
@@ -34,7 +34,7 @@
 						</div>
 						<div class="form-group col-sm-6">
 							<label>Landmark</label>
-							<input type="text" class="form-control" name="country" placeholder=" Landmark" value="{{address.country}}">
+							<input type="text" class="form-control" name="country" placeholder=" Landmark" value="{{address.landmark}}">
 						</div>
 						<div class="form-group col-sm-6">
 							<label>State</label>
@@ -135,12 +135,12 @@
 <!--/#cart_items-->
 
 <script>
-	$('#checkout-form').submit((e) => {
+	$('#checkout-form1').submit((e) => {
 		e.preventDefault()
 		$.ajax({
 			url: '/placeorder1',
 			method: 'post',
-			data: $('#checkout-form').serialize(),
+			data: $('#checkout-form1').serialize(),
 			success: (response) => {
 				if (response.stat) {
 					location.href = '/just'
@@ -217,7 +217,7 @@
 		},
 		method:'post',
 		success:(response)=>{
-			console.log(response)
+			
 			if(response.couponStatus == false){
 				document.getElementById('couponErr').style.display='block'
 			}else{

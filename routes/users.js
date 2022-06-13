@@ -15,7 +15,7 @@ const { ObjectId } = require('mongodb');
 const accountSid =  process.env.TWILIO_ACCOUNT_SID
 const autToken = process.env.TWILIO_AUTH_TOKEN
 const client = require('twilio')(accountSid,autToken);  
-
+const twilioserviceId=process.env.TWILIO_SERVICE_ID
  
  
 const veryfyuser= (req,res,next)=>{         
@@ -38,7 +38,6 @@ router.get('/', async(req,res) =>{
   let offer =await productHelpers.getOffersData()
   let offers=offer[0]
     
- 
   productHelpers.getAllproducts().then((products)=>{
     req.session.user=true
     res.render('user/index', {CartCount,totalamount,user:req.session.user,indexPage:true, products,userLoggedIn:req.session.userLoggedIn,pageStatus,offers,totalOrders});
@@ -59,7 +58,7 @@ router.get('/offerproduct1',async(req,res)=>{
   let total=await userHelpers.getTotalAmount(req.session.userid)
   let totalamount = total[0]
 
-  console.log(products);
+  
 
   res.render('user/serachProducts',{user:true,userLoggedIn:req.session.userLoggedIn,products,total,totalamount,CartCount,totalOrders})
   
@@ -118,44 +117,56 @@ router.get('/goHome', function (req, res, next) {
 
 
 router.post('/submitSignupForm',  async (req, res) =>{
+   let data= req.body;
+   mobile=parseInt(req.body.mobile) 
+   let loginpage=true
+   
+  client.verify.services(keys.serviceid)
+  .verifications
+  .create({to: '+91'+mobile, channel: 'sms'})
+  .then((verification) => {
   
+    res.render('user/forgotpassword',{data,loginpage,mobile,otpErr:req.session.otpErr})   
+    req.session.otpErr=false   
+   }
+    ).catch((err)=>{
+      console.log(err);
+    })
 
 
-  userHelpers.addUser(req.body).then((responce)=>{
-    if(responce==false){
-      req.session.signupErr=true
-      res.redirect('/Signup')   
-    }else{
-      req.session.userLoggedIn=true     
-      mobile=parseInt(req.body.mobile) 
-      let loginpage=true
-     
+  });
 
-      client.verify.services(keys.serviceid)
-             .verifications
-             .create({to: '+91'+mobile, channel: 'sms'})
-             .then((verification) => {
-               res.render('user/forgotpassword',{loginpage,user:mobile,otpErr:req.session.otpErr})   
-               req.session.otpErr=false   
-              }
-               ).catch((err)=>{
-                 console.log(err);
-               })
 
-    }
-    
-  })
-});
 
 router.post('/successotp',(req,res)=>{
+ 
   
-  
-client.verify.services(keys.serviceid)
+client.verify.services(twilioserviceId)
 .verificationChecks
 .create({to: '+91'+req.body.mobile, code:req.body.otp })
 .then(verification_check =>{
-    if(verification_check.status=='approved'){  
-      res.redirect('/')
+    if(verification_check.status=='approved'){
+      
+      userHelpers.addUser(req.body).then((responce)=>{
+        
+        if(responce==false){
+          req.session.signupErr=true
+          res.redirect('/Signup')   
+        }else{
+          req.session.userid=responce._id
+          req.session.user=true
+          req.session.userLoggedIn=true     
+           
+        
+          res.redirect('/') 
+        }
+        
+      })
+
+
+
+
+     
     }else{
       req.session.otpErr=true    
       res.redirect('user/forgotpassword')     
@@ -213,7 +224,7 @@ router.get('/resetpassword',(req,res)=>{
 });        
 
 router.post('/repassword',(req,res)=>{
-  console.log(req.body.email);
+ 
   userHelpers.checkemail(req.body).then((data)=>{
    if(data.status=='unblock'){
      res.render('user/psswordchange',{data})
@@ -233,15 +244,8 @@ usersHelpers.changepassword(req.body).then((responce)=>{
 
 
 
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-
 router.get('/addtocart/:id', async(req,res)=>{      
-   console.log(req.session.userid);
+  
    if(req.session.userid){   
      
     usersHelpers.addToCart(req.params.id,req.session.userid).then(async()=>{
@@ -256,13 +260,6 @@ router.get('/addtocart/:id', async(req,res)=>{
   }
       
 });
-
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
 
 
 
@@ -318,7 +315,7 @@ router.get('/cart',veryfyuser,async(req,res)=>{
 router.post('/change-product-quantity',(req,res,next)=>{
  
   userHelpers.changeProductQty(req.body).then(async(response)=>{
-    console.log(req.body.userId);
+    
      let userId=req.body.userId
      total=await userHelpers.getTotalAmount(userId);
      totalPrice=total[0]
@@ -362,7 +359,7 @@ router.post('/placeorder',async(req,res)=>{
           
       let total=req.body.grandTotal
       userHelpers.generateRazorpay(orderId,total).then((response)=>{
-        console.log(response,"response2")
+       
             
           res.json(response)
       })
@@ -370,7 +367,7 @@ router.post('/placeorder',async(req,res)=>{
     
 
   })
-  console.log(req.body);   
+ 
   
 })
 
@@ -380,13 +377,16 @@ router.post('/placeorder',async(req,res)=>{
 
 
 router.post('/placeorder1',async(req,res)=>{
-
   
-
   let products= await userHelpers.singleTotal(req.body.productId)
   let totalPrice= req.body.grandTotal
   let userId=req.body.userId
-  userHelpers.placeOrder(req.body,products,totalPrice,userId).then((orderId)=>{
+
+  
+
+     
+
+  userHelpers.placeOrder1(req.body,products,totalPrice,userId).then((orderId)=>{
     
     if(req.body.paymentMethod=='cod'){ 
      
@@ -395,7 +395,7 @@ router.post('/placeorder1',async(req,res)=>{
           
       let total=req.body.grandTotal
       userHelpers.generateRazorpay(orderId,total).then((response)=>{ 
-        console.log(response,"response2")
+       
             
           res.json(response)
       })
@@ -414,7 +414,7 @@ router.get('/just',veryfyuser,(req,res)=>{
 })
   
 router.post('/verify-payment',(req,res)=>{ 
-  console.log(req.body);
+  
   usersHelpers.verifyPayment(req.body).then(()=>{
     userHelpers.changePaymentStatus(req.body['order[receipt]']).then(()=>{
       res.json({status:true})
@@ -427,33 +427,49 @@ router.post('/verify-payment',(req,res)=>{
 
 router.get('/view-orders',veryfyuser,async(req,res)=>{
  let order=await usersHelpers.getOrderList(req.session.userid)
+   
     res.render('user/orders',{order,user:req.session.user,userLoggedIn:req.session.userLoggedIn})    
   
 })
 router.get('/view-order-details/:id',veryfyuser, async(req,res)=>{     
   let products=await userHelpers.getOrderproduct(req.params.id)
- 
-  res.render('user/orderProducts',{products,user:req.session.user,userLoggedIn:req.session.userLoggedIn})
+            
+         if(products[0].products==undefined){
+            let products=await userHelpers.getOrderprodut1(req.params.id)
+           
+            
+                products=products[0].item
+
+              
+                
+                res.render('user/orderproduct1',{products,user:req.session.user,userLoggedIn:req.session.userLoggedIn})
+         }else{
+          res.render('user/orderProducts',{products,user:req.session.user,userLoggedIn:req.session.userLoggedIn})
+
+         }
+  
+   
+  
 })
 
 router.get('/invoice/:id',veryfyuser,async(req,res)=>{
-  let orderId=req.params.id
+  let orderId=req.params.id  
   let orderDetails=await userHelpers.getOrderdetails(orderId)
-  console.log(orderDetails);
   let products= await usersHelpers.getOrderproduct(orderId)
-  res.render('user/invoice',{orderDetails,products})
+  if(products[0].products==undefined){
+    let products= await usersHelpers.getOrderprodut1(orderId)
+        products=products[0].item
+       
+    res.render('user/invoice1',{orderDetails,products})
+  }else{
+    res.render('user/invoice',{orderDetails,products})
+  }
+   
     
 })
 
-router.get('/invoice1/:id',veryfyuser,async(req,res)=>{
-  let orderId=req.params.id
-  let orderDetails=await userHelpers.getOrderdetails(orderId)
-  let products= await usersHelpers.getOrderproduct(orderId)
-  res.render('user/invoice',{orderDetails,products})
-    
-})
-
-router.get('/delivered-orders',veryfyuser,async(req,res)=>{
+ 
+router.get('/delivered-orders',veryfyuser,async(req,res)=>{ 
   let order=await usersHelpers.getDeliveredOrder(req.session.userid)
     
     res.render('user/delivered-orders',{order,user:req.session.user,userLoggedIn:req.session.userLoggedIn})    
@@ -465,10 +481,7 @@ router.get('/delivered-orders',veryfyuser,async(req,res)=>{
      res.json({status:true})
   })
 
-router.post('/search-main',(req,res)=>{
-  console.log(req.body);
-  
-})
+
 
 
 
@@ -477,6 +490,7 @@ router.post('/search-main',(req,res)=>{
 
 // buy now //
 router.get('/buynow:id',veryfyuser,async(req,res)=>{
+  
   let productId=await req.params['id']
   productId=productId
   let user=req.session.user 
@@ -487,10 +501,9 @@ router.get('/buynow:id',veryfyuser,async(req,res)=>{
       address=address[0] 
       address={...address};
       address=await address.delivaryDetails
-  console.log("its get addresss");
-  console.log(address); 
+ 
 
-
+  
   productDetals=productDetals[0]
   
   if(user){
@@ -504,11 +517,11 @@ router.get('/buynow:id',veryfyuser,async(req,res)=>{
 /// single view coupon applay
 
 router.post('/coupon-single',async(req,res)=>{
-  console.log(req.body.totalAmount) ;
+  
   let userid=req.session.userid
  let coupon =await userHelpers.validateCoupon(req.body.couponCode)
  if(coupon===null){
-   console.log("coupon null");
+  
    res.json({couponStatus:false})
  }else{
    let total=await usersHelpers.getTotalAmount(userid)
@@ -516,7 +529,7 @@ router.post('/coupon-single',async(req,res)=>{
    let num1=parseInt(req.body.totalAmount);
    let num2=parseInt(coupon.amount);
    let grandTotal=num1-num2  
-   console.log(grandTotal,"grandTotal");
+   
 
   res.json({couponStatus:true,
     grandTotal:grandTotal,
@@ -533,7 +546,7 @@ router.post('/coupon',async(req,res)=>{
   let userid=req.session.userid
  let coupon =await userHelpers.validateCoupon(req.body.couponCode)
  if(coupon===null){
-   console.log("coupon null");
+  
    res.json({couponStatus:false})
  }else{
    let total=await usersHelpers.getTotalAmount(userid)
@@ -541,7 +554,7 @@ router.post('/coupon',async(req,res)=>{
    let num1=parseInt(total[0].total);
    let num2=parseInt(coupon.amount);
    let grandTotal=num1-num2  
-   console.log(grandTotal,"grandTotal");
+  
 
   res.json({couponStatus:true,
     grandTotal:grandTotal,

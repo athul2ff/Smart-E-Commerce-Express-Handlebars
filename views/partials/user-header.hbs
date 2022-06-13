@@ -1,15 +1,5 @@
-<!-- header -->
-<div class="header">
-	<div class="container">
-		<ul>
-			<li><span class="glyphicon glyphicon-time" aria-hidden="true"></span>Free and Fast Delivery</li>
-			<li><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>{{totalOrders}} Sucsessfull orders</li>
-			<li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a
-					href="mailto:info@example.com">infomax@example.com</a></li>
-		</ul>
-	</div>
-</div>
-<!-- //header -->
+
+
 <!-- header-bot -->
 <div class="header-bot">
 	<div class="container">
@@ -117,11 +107,11 @@
 
 {{#if indexPage}}
 <!-- banner -->
-<div class="banner-grid">
+<div class="banner-grid audio1" id="audio1">
 	<div id="visual">
 		<div class="slide-visual">
 			<!-- Slide Image Area (1000 x 424) -->
-			<ul class="slide-group">
+			<ul class="slide-group" style="padding-bottom:1px ; width:100%;" >
 				<li><img class="img-responsive" src="images/ba1.jpg" alt="Dummy Image" /></li>
 				<li><img class="img-responsive" src="images/ba2.jpg" alt="Dummy Image" /></li>
 				<li><img class="img-responsive" src="images/ba3.jpg" alt="Dummy Image" /></li>
@@ -167,6 +157,12 @@
 	</script>
 
 	<script>
+		$(document).ready(function () {
+    if ($(window).width() < 640) {
+        $('.audio').remove();
+		$('.audio1').remove();
+    }
+     });
 
 		function addToCart(proId) {
 			$.ajax({
@@ -178,7 +174,7 @@
 						count = parseInt(count)
 						count = count + 1
 						document.getElementById('CartCount').innerHTML = count
-                       console.log(response.total[0].total)
+                      
                         document.getElementById('toptotal').innerHTML=response.total[0].total
 						alert('Item add to Cart')
 

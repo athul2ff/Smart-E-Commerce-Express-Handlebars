@@ -110,7 +110,7 @@ module.exports={
           
           let products= await db.get().collection(collection.PRODUCT_COLLECTION).find({$and:[{"category":"MEN"},{$or:[{"title":data.searchkey},{"brand":data.searchkey},{"category":data.searchkey}]}]}).toArray()
 
-          console.log("men collections");
+        
           
           resolve(products)
 
@@ -118,16 +118,16 @@ module.exports={
 
           let products= await db.get().collection(collection.PRODUCT_COLLECTION).find({$and:[{"category":"WOMEN"},{$or:[{"title":data.searchkey},{"brand":data.searchkey},{"category":data.searchkey}]}]}).toArray()
 
-          console.log("wonem collections");
+          
           resolve(products)
 
         }
         else{
           let products= await db.get().collection(collection.PRODUCT_COLLECTION).find({$and:[{"category":"KIDS"},{$or:[{"title":data.searchkey},{"brand":data.searchkey},{"category":data.searchkey}]}]}).toArray()
 
-          console.log("kids collections");
+         
           if (products == null){
-            console.log("products is empty");
+           
           }
           resolve(products)
         }
@@ -139,8 +139,8 @@ module.exports={
     offerProducts:(data)=>{
       return new Promise (async(resolve,reject)=>{
         let products = await db.get().collection(collection.PRODUCT_COLLECTION).find({"brand":data}).toArray()
-        console.log(products);
-        console.log("jellosjdofjskdjf");
+        
+       
         resolve(products)
 
       })
